@@ -53,8 +53,22 @@ public class Pilha<E> {
 	 * @throws IllegalArgumentException se a pilha não contém numItens elementos.
 	 */
 	public Pilha<E> subPilha(int numItens) {
-		
-		// TODO
-		return null;
+		if(numItens < 0){ // valida numItens
+			throw new IllegalArgumentException();
+		}
+		Pilha<E> aux = new Pilha<>(); // guarda temporariamente os elementos copiados
+		Pilha resultado = new Pilha<>(); // pilha nova que o metodo vai devolver
+		Celula<E> atual = topo; // referencia que começa apontando para o topo da pilha original
+		for(int i = 0 ; i < numItens; i++){ //repete exatamente numitens vezes pq queremos copiar os numitens elementos do topo
+			if(atual == fundo){
+				throw new IllegalArgumentException("A plilha não possui itens  suficientes");
+			}
+			aux.empilhar(atual.getItem()); // pega o item da celula atual e empilha da auxiliar
+			atual = atual.getProximo(); // avança pra prox celula da pilha original
+		}
+		while(!aux.vazia()){ // os itens ficaram invertidos ent isso daqui inverte a ordem novamente pra ficar certinho
+			resultado.empilhar(aux.desempilhar());
+		}
+		return resultado;
 	}
 }
